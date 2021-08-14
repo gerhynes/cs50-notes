@@ -107,3 +107,177 @@ Threads allow a computer to do multiple things at once.
 Scratch is a graphical programming language developed at MIT's Media Lab. It contains the same features as more complex programming languages: variables, functions, loops, events.
 
 Abstraction is when you and others agree take a complicated idea and, while you can implement it the more complex way, you will think about it on a simpler level.
+
+## 1 - C
+
+There are a few guiding lights when writing code: correctness, design, style.
+
+"hello, world" in C is:
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+  printf("hello, world");
+}
+```
+
+For a computer to understand this code, it needs to be converted from source code to machine code. A compiler is a programme designed to do this.
+
+You need to type `make hello` to compile your code and `./hello` to run it.
+
+A function is a programmed version of an algorithm. They take in arguments and can have side effects or return values.
+
+```C
+string answer = get_string("What's your name? ");
+printf("hello, %s\n", answer);
+```
+
+Header files are programmes written in C with a .h file extension. `stdio.h` is the standard input output programme in C.
+
+Comments should convey the purpose/intention of your code, not describe what it is literally doing.
+
+### The Command Line
+
+The command line lets you run commands without the need for a GUI.
+
+For example:
+
+ls - list files in current directory
+rm - remove file
+mv - move (rename) file
+mkdir - make directory
+cd - change directory
+rmdir - remove directory
+
+### Types
+
+In C you have access to many data types: bool, char, double, float, int, long, string.
+
+Each of these data types only have a finite number of bits.
+
+Integers only use 32 bits. This can support 4 billion total values and lets you count from -2 billion to 2 billion. To work with larger numbers you'd need a long.
+
+When working with formatted strings, you can use the following format codes:
+
+%c - single character
+%f - floating point value
+%i - integer
+%li - long
+%s - string
+
+C supports a number of mathmatical operators: +, -, \*, /, %.
+
+### Typecasting
+
+You need to keep track of which type you are using.
+
+For example, if you divide an int by an int you'll get back an int, even if they don't divide evenly. You can store and print the result as a float but you'll lose everything after the decimal point. 4 / 3 would give you 1.000000.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+  int x = get_int("x: ");
+  int y = get_int("y: ");
+
+  float z = x / y;
+  printf("%f\n", z);
+}
+```
+
+You can get the computer to convert an int to a float by casting one data type to another: `float z = (float x) / (float) y`
+
+Syntactic sugar is a different way of doing something syntactically that doesn't give you any new capabilities that you didn't already have.:`counter = counter + 1;` vs `counter += 1;` vs `counter++;`.
+
+In C you use double quotes for strings but single quotes for individual characters.
+
+### Abstraction
+
+Abstraction is a computer programming principle where you can simplify otherwise more complicated detials.
+
+A function lets you abstract its implementation details by just calling it by its name.
+
+By convention, you write your custom functions after your main function. But C won't understand this since you'll be calling the function before you define it. To remedy this, place the prototype above the main function.
+
+```c
+#include <stdio.h>
+
+// Prototype
+void meow(void)
+
+int main(void)
+{
+  for (int i = 0; i < 3; i++)
+  {
+    meow();
+  }
+}
+
+void meow(void)
+{
+  printf("meow\n");
+}
+```
+
+`void` refers the absence of input or output. If a function doesn't have a return value or arguments, mark it with `void`.
+
+```c
+void meow(int n)
+{
+  for (int i = 0; i < n; i++)
+  {
+    printf("meow\n");
+  }
+}
+```
+
+A do while loop is like a while loop but will do an action at least one time before checking a condition.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+// Prototype
+int get_positive_int(void)
+
+int main(void)
+{
+  int i = get_positive_int();
+  printf("%i\n", i);
+}
+
+int get_positive_int(void)
+{
+  int n;
+  do
+  {
+    n = get_int("Positive Integer: ");
+  }
+  while (n < 2);
+  return n;
+}
+```
+
+When you declare a variable inside curly braces you run into the issue of scope. The scope of a variable is the lines of code in which that variable exists and you can use it.
+
+This is why you need to declare n outside the do while loop above.
+
+### Floating-point imprecision
+
+You can control how many decimal places printf will print `printf(%.10\n, x / y)` but you may run into floating-point imprecision.
+
+Computers only have finite memory. If you only have a finite number of bits you can count pretty precisely but not infinitely high or low.
+
+After a certain point the computer will have to approximate and you'll run into problems like 1 / 10 equaling 0.100000001490116119384........
+
+### Integer overflow
+
+Even integers have limitations. Integers are only 32 bit. If the calculation needs more than this then the result becomes inaccurate. If you need to carry a number but run out of space it gets dropped.
+
+This is the same principle behind the Y2K scare. Any system storing years as two digits would go from 99 to 00 and interpret 2000 as 1900.
+
+The Unix Epoch counds the seconds since 1 January 1970. Any programme that is keeping track of this using 32 bits will run into problems once it reaches 4 billion seconds, on 19 January 2038.
