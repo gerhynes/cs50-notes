@@ -281,3 +281,40 @@ Even integers have limitations. Integers are only 32 bit. If the calculation nee
 This is the same principle behind the Y2K scare. Any system storing years as two digits would go from 99 to 00 and interpret 2000 as 1900.
 
 The Unix Epoch counds the seconds since 1 January 1970. Any programme that is keeping track of this using 32 bits will run into problems once it reaches 4 billion seconds, on 19 January 2038.
+
+## 2 - Arrays
+
+### Compiling
+
+A compiler is a programme that converts source code to machine code. Clang is a popular compiler for C.
+
+When all programmes had to be compiled, the default file produced was `a.out` for assembly output.
+
+Clang can be configured with command line arguments but these can become long and verbose. Eventually you will want to automate the steps.
+
+Sometimes when using a library it's not sufficient to include the header file at the top of your code, you need to explicitly tell the computer where to find the file.
+
+When you comile your code there are a few steps involved:
+
+- precompiling
+- compiling
+- assembling
+- linking
+
+First the computer preprocesses your code, looking for any lines starting with `#` and copying the contents of the referenced file into your own code.
+
+To compile your code means to convert it from source code to another kind of source code, assembly code.
+
+To assemble your code means to convert your code from assembly to machine code, 0s and 1s.
+
+Finally the 0s and 1s of your code need to be linked to the 0s and 1s of any library you are using.
+
+### Debugging
+
+The most famous early bug is from Rear Admiral Grace Hopper's notebook.
+
+Printing a value to the terminal is the easiest way to debug.
+
+A debugger gives you more nuanced tools for debugging, letting you run your programme more slowly.
+
+You can step through line by line, set breakpoints where you want to pause the execution of your code and see what is going on.
