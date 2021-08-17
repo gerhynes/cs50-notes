@@ -318,3 +318,83 @@ Printing a value to the terminal is the easiest way to debug.
 A debugger gives you more nuanced tools for debugging, letting you run your programme more slowly.
 
 You can step through line by line, set breakpoints where you want to pause the execution of your code and see what is going on.
+
+One final debugging technique is rubber duck debugging. Sometimes explaining out loud what your code is supposed to do can clarify things.
+
+### Memory
+
+On a typical computer each data type in C is defined as taking up a fixed amount of space. This varies, but for example:
+
+- bool - 1 byte
+- char - 1 byte
+- double - 8 bytes
+- float - 4 bytes
+- int - 4 bytes
+- long - 8 bytes
+- string - ? bytes
+
+It's in memory (RAM) that programmes are stored while running and files are stored while open.
+
+RAM is much faster than solid state storage but it's also volatile, it requires electricity to maintain it.
+
+Imagine your computer's memory as a grid of bytes. An int would take up 4 spaces. In those 4 spaces would be a pattern of 0s and 1s representing the int.
+
+### Arrays
+
+An array is a sequence of values stored in memory back to back.
+
+In C you need to specify how many values you want to store in the array when you declare it. The exception is when you are passing an array to a custom function, because you don't know in advance.
+
+```c
+int scores[3];
+
+scores[0] = 72;
+scores[1] = 73;
+scores[2] = 33;
+```
+
+A constant is a variable whose value cannot change.
+
+```c
+const int TOTAL = 3;
+```
+
+### Strings
+
+If you cast a character to an int, you can access its ASCII value.
+
+Each char is stored in a single byte.
+
+By default, C does not have a string datatype.
+
+A string is an array of characters.
+
+So the string `"HI!"` is equivalent to the array `['H', 'I', '!']`.
+
+You can access the individual characters of a string using [] notation.
+
+The computer's memory knows when strings begin and end because, under the hood, the string uses one extra byte, `\0` or `NUL`, to represent the end of the string. For example, the string `HI!` uses 4 bytes, not 3.
+
+```c
+string s = "HI!"
+printf("%i %i %i %i\n", s[0], s[1], s[2], s[3]);
+// 72 73 33 0
+```
+
+One dangerous aspect of C is that you can access values from other parts of memory. If you accessed `s[4]` you would get whatever value is in this adjacent spot in memory.
+
+If you want to loop to the end of a string and then stop, you could set your loop to break when it reaches `\0` or use the `strlen()` function from `<string.h>`.
+
+```c
+int main(void)
+{
+  string s = get_string("Input: ");
+  printf("Output: ");
+  for (int i = 0, n = strlen(s); i < n; i++)
+  {
+    printf("%c", s[i]);
+  }
+  printf("\n");
+}
+
+```
