@@ -201,7 +201,7 @@ Abstraction is a computer programming principle where you can simplify otherwise
 
 A function lets you abstract its implementation details by just calling it by its name.
 
-By convention, you write your custom functions after your main function. But C won't understand this since you'll be calling the function before you define it. To remedy this, place the prototype above the main function.
+By convention, you write your custom functions after your `main` function. But C won't understand this since you'll be calling the function before you define it. To remedy this, place the prototype above the `main` function.
 
 ```c
 #include <stdio.h>
@@ -398,3 +398,68 @@ int main(void)
 }
 
 ```
+
+### Arrays of Strings
+
+You can have an array of strings. And since a string is itself an array, this is an array of arrays.
+
+```c
+string words[2];
+words[0] = "HI!";
+words[1] = "BYE!";
+```
+
+You can use multiple [] to access values from nested arrays.
+
+```c
+words[0][0]
+// 'H'
+words[1][1]
+// 'Y'
+```
+
+The ASCII values of uppercase and lowercase letters are always 32 apart. You could uppercase a lowercase letter by subtracting 32 from it. Or you could just use the `toupper()` function from `<ctype.h>`. `toupper()` expects a character as input; you cannot pass a word to it. To make a string uppercase you would need to loop over every character in the string.
+
+### Command-line Arguments
+
+Just as custom functions can take inputs, so can main.
+
+```c
+int main(int argc, string argv[])
+{
+
+}
+```
+
+This means that this `main` takes an int and an array of strings as its input.
+
+`argc` stands for argument count, the number of words you expect your user to type at the prompt. This includes the name of your programme.
+
+`argv` stands for argument vector, an array of the strings typed by the user.
+
+### Exit Status
+
+Programmes often return an int to show what has happened. 0 indicates that nothing as gone wrong. This is why in C you set up `main` to return an int.
+
+```c
+int main(int argc, string argv[])
+{
+  if (argc != 2)
+  {
+    printf("missing command-line argument\n");
+    return 1;
+  }
+  printf("hello, %s\n", argv[1]);
+  return 0;
+}
+```
+
+### Cryptography
+
+Cryptography is the art of scrambling information in order to hide it.
+
+If that information is text, you can convert the plaintext to ciphertext.
+
+A cipher is an algorithm that scrambles its input so as to produce an output that a third party can't understand. That algorithm is a reversible process so that you can decipher the text and read it.
+
+Ciphers use a key to determine how to encrypt and decrypt the input.
