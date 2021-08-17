@@ -463,3 +463,72 @@ If that information is text, you can convert the plaintext to ciphertext.
 A cipher is an algorithm that scrambles its input so as to produce an output that a third party can't understand. That algorithm is a reversible process so that you can decipher the text and read it.
 
 Ciphers use a key to determine how to encrypt and decrypt the input.
+
+## 3 - Algorithms
+
+A computer can only look at one location in an array at any one time.
+
+Designing a search algorithm well is a compelling problem to solve.
+
+Running time is how long an algorithm takes to run. This is the basis of Big O notation.
+
+An algorithm with a linear curve could be described as O(n), one twice as fast would be O(n/2), one that is logarithmic would be O(log2 n).
+
+Computer scientists tend to ignore constant factors and focus on the dominant factor. So this would be simplififedto O(n) and O(log n).
+
+You tend to see common formulas:
+
+- O(n2)
+- O(n log n)
+- O(n)
+- O(log n)
+- O(1)
+
+Just as Big O notation refers to an upper bound of how much time an algorithm will take, Ω notation refers to the lower bound.
+
+### Linear Search
+
+Linear search sequentially checks every item in a list.
+
+This is O(n) and Ω(1).
+
+```c
+int main(void)
+{
+  int numbers[] = {4,6,8,2,7,5,0};
+
+  for (int i = 0; i < 7; i++)
+  {
+    if (numbers[i] == 0)
+    {
+      printf("Found\n");
+      return 0;
+    }
+  }
+  printf("Not found\n");
+  return 1;
+}
+```
+
+```c
+int main(void)
+{
+  string names[] = {"Bill", "Charlie", "Fred", "George", "Ginny", "Percy", "Ron"}
+
+  for (int i = 0; i < 7; i++)
+  {
+    if (strcmp(names[i], "Ron") == 0)
+    {
+      printf("Found\n");
+      return 0;
+    }
+  }
+  printf("Not found\n");
+}
+```
+
+### Binary Search
+
+Binary search repeatedly divides in half the part of a list that could contain an item, until the possible locations is narrowed down to just one.
+
+This is O(log n) and Ω(1).
