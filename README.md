@@ -266,7 +266,7 @@ When you declare a variable inside curly braces you run into the issue of scope.
 
 This is why you need to declare n outside the do while loop above.
 
-### Floating-point imprecision
+### Floating-point Imprecision
 
 You can control how many decimal places printf will print `printf(%.10\n, x / y)` but you may run into floating-point imprecision.
 
@@ -274,7 +274,7 @@ Computers only have finite memory. If you only have a finite number of bits you 
 
 After a certain point the computer will have to approximate and you'll run into problems like 1 / 10 equaling 0.100000001490116119384........
 
-### Integer overflow
+### Integer Overflow
 
 Even integers have limitations. Integers are only 32 bit. If the calculation needs more than this then the result becomes inaccurate. If you need to carry a number but run out of space it gets dropped.
 
@@ -490,7 +490,7 @@ Just as Big O notation refers to an upper bound of how much time an algorithm wi
 
 Linear search sequentially checks every item in a list.
 
-This is O(n) and Ω(1).
+This has a time complexity of O(n) and Ω(1).
 
 ```c
 int main(void)
@@ -510,25 +510,82 @@ int main(void)
 }
 ```
 
-```c
-int main(void)
-{
-  string names[] = {"Bill", "Charlie", "Fred", "George", "Ginny", "Percy", "Ron"}
-
-  for (int i = 0; i < 7; i++)
-  {
-    if (strcmp(names[i], "Ron") == 0)
-    {
-      printf("Found\n");
-      return 0;
-    }
-  }
-  printf("Not found\n");
-}
-```
-
 ### Binary Search
 
 Binary search repeatedly divides in half the part of a list that could contain an item, until the possible locations is narrowed down to just one.
 
-This is O(log n) and Ω(1).
+This has a time complexity of O(log n) and Ω(1).
+
+### Structs
+
+Using `typefed` and the `struct` keyword, C can create a datatype that is combination of other datatypes. This could be useful for storing key value pairs.
+
+```c
+typedef struct
+{
+  string name;
+  string number;
+}
+person;
+```
+
+Phone numbers should be represented using strings not ints since they can have non-numeric characters in them.
+
+```c
+typedef struct
+{
+  string name;
+  string number;
+}
+person;
+
+int main(void)
+{
+  person people[2];
+
+  people[0].name = "Brian";
+  people[0].number = "+1-617-495-1000";
+
+  people[1].name = "David";
+  people[1].number = "+1-949-468-2750";
+
+  for (int i = 0; i < 2; i++)
+  {
+    if (strcmp(names[i].name, "David") == 0)
+    {
+      printf("Found %s\n", people[i].number);
+      return 0;
+    }
+  }
+  printf("Not found\n");
+  return 1;
+}
+```
+
+### Selection Sort
+
+Selection sort loops over a list, finding the smallest unsorted item and swapping it with the leftmost unsorted item until all items have been sorted. It is relatively inefficient.
+
+It has a time complexity of O(n2) and Ω(n2).
+
+### Bubble Sort
+
+Bubble sort loops over a list, compares two adjacent elements and swaps them if they are in the wrong order. The loop is repeated until the list is sorted. The largest values bubble up to the end of the list.
+
+It has a time complexity of O(n2) and Ω(n).
+
+### Recursion
+
+Recursion is the ability for a function to call itself.
+
+You need to have a base case to quit execution.
+
+### Merge Sort
+
+Merge sort is a divide and conquer algorithm where you divide the unsorted list into n sublists, each containing one item, and then repeatedly merge the sublists to produce new sorted sublists until there is only one remaining.
+
+Or in other terms: sort the left half, sort the right half, merge both halves.
+
+It has a time complexity of O(n log n) and Ω(n).
+
+Any time an algorithm has the same upper bound and lower bound, you can describe it with ϴ notation.
