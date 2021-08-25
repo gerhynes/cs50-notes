@@ -589,3 +589,105 @@ Or in other terms: sort the left half, sort the right half, merge both halves.
 It has a time complexity of O(n log n) and Ω(n).
 
 Any time an algorithm has the same upper bound and lower bound, you can describe it with ϴ notation.
+
+## 4 - Memory
+
+Hexadecimal is a base-16 system using 0-9 and A-F.
+
+So 0F = 16 and 10 = 17 and FF = 255.
+
+Conveniently, one hexadecimal digit is equivalent to four binary digits.
+
+By convention, hexademcial digits are represented with a `0x` prefix - `0x48` or `0x21` - to distinguish them from binary digits.
+
+Hexadecimal is is the basis of RGB. That's why #000000 is black, the absence of colour and #FFFFFF is white, the complete saturation of colour.
+
+### Addresses and Pointers
+
+C has an `&` operator for looking up addresses in memory. The `*` operator is for looking inside a particular memory address.
+
+```c
+int n = 50;
+printf("%p\n", &n);
+// 0x7ffd80792f7c
+```
+
+A pointer is a variable that contains the address of some other value. A pointer takes up 8 bytes.
+
+```c
+int n = 50;
+int *p = &n;
+printf("%p\n", p);
+// 0x7ffeeec8d03c
+printf("%p\n", *p);
+// 50
+```
+
+### Strings
+
+Strings can be manipulated via their addresses. Since a string is an array of contiguous characters and ends in `\0`, you just need to know the address of the first character and you can find the rest of the string.
+
+```c
+string s = "HI!";
+printf("%p\n", &s[0]);
+printf("%p\n", &s[1]);
+printf("%p\n", &s[2]);
+// 0x4006b4
+// 0x4006b5
+// 0x4006b6
+```
+
+Just as you can think of strings as sequences of characters or as arrays, you can also think of them as pointers, the address of a character in memory.
+
+Technically, string does not exist as a datatype in C. Instead it is `char *`, the address of a character.
+
+For example, `<cs50.h>` uses `typedef char *string;` to create `string` as a synonym for `char *`.
+
+#### Pointer Arithmetic
+
+You can do simple arithmetic on a pointer to access nearby addresses.
+
+```c
+char *s = "HI!";
+printf("%c\n", *s);
+printf("%c\n", *(s+1));
+printf("%c\n", *(s+2));
+```
+
+When you touch memory you shouldn't, you may get a segmentation fault.
+
+If you try to naively compare two strings, you'll be comparing the addresses of their first characters.
+
+The `strcmp` function lets you compare the values of two strings.
+
+```c
+char *s = get_string("s: ")
+char *t = get_string("t: ")
+
+if(strcmp(s,t) == 0)
+{
+  printf("Same\n")
+}
+else
+{
+  printf("Different\n")
+}
+```
+
+If you copy a string by simply assigning one string to another, they will both point to the same address in memory. This will later cause problems if you change one of the strings.
+
+To safely copy a string, you need to assign a space in memory to copy its contents into. Use the `malloc` (memory allocation) function.
+
+`malloc` takes a number specifying how many bytes of information to allocate. Remember to keep one for the null character.
+
+`NULL` represents a null pointer, the absence of an address.
+
+Any time you ask the computer for memory using `malloc`, the onus is on you to eventually give it back. Use `free` to free it up again.
+
+#### Valgrind
+
+Valgrind is a tool for memory debugging, helping you to figure out where you touched memroy you shouldn't have or putting in `free` when needed, preventing a memory leak.
+
+You should never trust the contents of your computer's memory if you have not explicitly put the content there. Assume it's a "garbage value".
+
+Always initialize values before thinking of touching or reading them.
