@@ -691,3 +691,98 @@ Valgrind is a tool for memory debugging, helping you to figure out where you tou
 You should never trust the contents of your computer's memory if you have not explicitly put the content there. Assume it's a "garbage value".
 
 Always initialize values before thinking of touching or reading them.
+
+#### Memory Layout
+
+By convention, a computer doesn't just put things in random locations in memory. It treats different portions of memory differently.
+
+When you run a programme, all the 0s and 1s are stored in machine code, seperately you have your globals, then the heap (a chunk of memory that `malloc` uses to get you a spare chunk of memory).
+
+When you call a function, it uses stack space rather than heap space.
+
+The stack is a dynamic space where memory keeps getting used and reused.
+
+| Memory       |      |
+| ------------ | ---- |
+| machine code |      |
+| globals      |      |
+| heap ↓       |      |
+|              | swap |
+| stack ↑      | main |
+
+If you want a function to change the contents of a variable, you need to pass in the address of the variable.
+
+```c
+void swap(int *a, int *b)
+
+int main(void)
+{
+  int x = 1;
+  int y = 2;
+
+  printf("x is %i, y is %i\n", x, y);
+  swap(&x,&y);
+  printf("x is %i, y is %i\n", x, y);
+}
+
+void swap(int *a, int *b)
+{
+  int temp = *a;
+  *a = *b;
+  *b = *tmp;
+}
+```
+
+Having the heap and stack consume memory from each end sets up problems to occur.
+
+A stack overflow is when you call a function so many times that it overflows the heap.
+
+When using iteration you probably won't overflow the stack but with recursion there is an inherent danger of overflow.
+
+A buffer overflow is when you allocate memory (for example, for an array) and then go over the limits of it.
+
+#### scanf
+
+scanf reads input from the user.
+
+If you manually assign space in memory for the input, you need to be aware that the user could enter more or less data, requiring more or less space in memory.
+
+```c
+int main(void)
+{
+  char s[4];
+  printf("s: ");
+  scanf("%s", s);
+  printf("s: %s\n", s);
+}
+```
+
+#### File I/O
+
+If you put a programme in memory, as soon as the programme ends it's contents are gone. Files allow for data to be saved long term.
+
+You can open files in different ways: to read them, to (over)write them or to append to them.
+
+You need to tell C when you are opening and closing a file and while mode you are working in.
+
+```c
+int main(void)
+{
+  FILE *file = fopen("phonebook.csv", "a");
+  if (file == NULL)
+  {
+    return 1;
+  }
+
+  char *name = get_string("Name: ");
+  char *number = get_string("Number: ");
+
+  fprintf(file, "%s,%s\n", name, number);
+
+  fclose(file);
+}
+```
+
+You can often determine a file's type by looking at its first few bytes. These "magic numbers" at the beginning of the files are industry standards. 
+
+A jpeg will start with `0xff 0xd8 0xff`.
