@@ -643,7 +643,7 @@ Technically, string does not exist as a datatype in C. Instead it is `char *`, t
 
 For example, `<cs50.h>` uses `typedef char *string;` to create `string` as a synonym for `char *`.
 
-#### Pointer Arithmetic
+### Pointer Arithmetic
 
 You can do simple arithmetic on a pointer to access nearby addresses.
 
@@ -684,7 +684,7 @@ To safely copy a string, you need to assign a space in memory to copy its conten
 
 Any time you ask the computer for memory using `malloc`, the onus is on you to eventually give it back. Use `free` to free it up again.
 
-#### Valgrind
+### Valgrind
 
 Valgrind is a tool for memory debugging, helping you to figure out where you touched memroy you shouldn't have or putting in `free` when needed, preventing a memory leak.
 
@@ -692,7 +692,7 @@ You should never trust the contents of your computer's memory if you have not ex
 
 Always initialize values before thinking of touching or reading them.
 
-#### Memory Layout
+### Memory Layout
 
 By convention, a computer doesn't just put things in random locations in memory. It treats different portions of memory differently.
 
@@ -741,7 +741,7 @@ When using iteration you probably won't overflow the stack but with recursion th
 
 A buffer overflow is when you allocate memory (for example, for an array) and then go over the limits of it.
 
-#### scanf
+### scanf
 
 scanf reads input from the user.
 
@@ -757,7 +757,7 @@ int main(void)
 }
 ```
 
-#### File I/O
+### File I/O
 
 If you put a programme in memory, as soon as the programme ends it's contents are gone. Files allow for data to be saved long term.
 
@@ -783,6 +783,131 @@ int main(void)
 }
 ```
 
-You can often determine a file's type by looking at its first few bytes. These "magic numbers" at the beginning of the files are industry standards. 
+You can often determine a file's type by looking at its first few bytes. These "magic numbers" at the beginning of the files are industry standards.
 
 A jpeg will start with `0xff 0xd8 0xff`.
+
+## 5 - Data Structures
+
+### Arrays
+
+Say you have an array with three elements and you want to add one more but the adjacent space in memory is already occupied by another value that's currently in use.
+
+You could create a new, larger array and copy the values into it.
+
+The running time of inserting into an array like this has an upper bound of O(n) and a lower bound of Ω(1).
+
+`realloc` works like `malloc` but takes two arguments: the address of a chunk of memory you've already allocated and the size of the memory you want to allocate to the new value. It copies the old values into the new space in memory.
+
+```c
+int main(void)
+{
+  int *list = malloc(3 * sizeof(int));
+  if (list == NULL)
+  {
+    return 1;
+  }
+
+  list[0] = 1;
+  list[1] = 2;
+  list[2] = 3;
+
+  int *tmp = realloc(list, 4 * sizeof(int));
+  if (tmp == NULL)
+  {
+    free(list);
+    return 1;
+  }
+
+  tmp[3] = 4;
+
+  free(list);
+
+  list = tmp;
+
+  for (int i = 0; i < 4; i++)
+  {
+    printf("%i\n", list[i]);
+  }
+
+  free(list);
+}
+```
+
+### Linked Lists
+
+A linked list is a data structure that solves some of the problems with arrays.
+
+You can grow and shrink the data structure dynamically without having to touch all the data and move it to a new location, making inserting data more efficient.
+
+You can put values wherever there is room in memory. For each value you also store metadata to keep track of location of the next value.
+
+A linked list is a collection of node conected by pointers.
+
+The trade-off is that is takes up more space in memory and you cannot rely on binary search.
+
+The running time of searching a linked list is O(n).
+
+If you don't care about sorted order, the running time of inserting into a linked list is O(1).
+
+```c
+typedef struct node
+{
+  int number;
+  struct node *next;
+}
+node;
+
+int main(void)
+{
+  node *list = NULL;
+
+  node *n = malloc(sizeof(node));
+  if(n == NULL)
+  {
+    return 1;
+  }
+  n->number = 1;
+  n->next = NULL;
+  list = n;
+
+  n = malloc(sizeof(node))
+  if(n == NULL)
+  {
+    free(list);
+    return 1;
+  }
+  n->number = 2;
+  n->next = NULL;
+  list->next = n;
+
+  n = malloc(sizeof(node))
+  if(n == NULL)
+  {
+    free(list->next);
+    free(list);
+    return 1;
+  }
+  n->number = 3;
+  n->next = NULL;
+  list->next->next = n;
+
+  for (node *tmp = list; tmp != NULL; tmp = tmp->next)
+  {
+    printf("%i\n", tmp->number);
+  }
+
+  while (list != NULL)
+  {
+    node *tmp = list->next;
+    free(list);
+    list = tmp;
+  }
+}
+```
+
+If you insert a new node without keeping track of the existing nodes, you have orphaned them, creating a memory leak.
+
+You can stitch together data structures in memory using pointers as a thread.
+
+### Trees
