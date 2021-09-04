@@ -18,14 +18,14 @@ Modern computers have millions of these switches (transistors).
 
 Three bits can be permuted in 8 ways.
 
-000 = 0
-001 = 1
-010 = 2
-011 = 3
-100 = 4
-101 = 5
-110 = 6
-111 = 7
+- 000 = 0
+- 001 = 1
+- 010 = 2
+- 011 = 3
+- 100 = 4
+- 101 = 5
+- 110 = 6
+- 111 = 7
 
 Early on, all computers could do was calculate. To represent letters, you could assign letters to numbers, like with ASCII (American Standard Code for Information Interchange).
 
@@ -144,12 +144,12 @@ The command line lets you run commands without the need for a GUI.
 
 For example:
 
-ls - list files in current directory
-rm - remove file
-mv - move (rename) file
-mkdir - make directory
-cd - change directory
-rmdir - remove directory
+- ls - list files in current directory
+- rm - remove file
+- mv - move (rename) file
+- mkdir - make directory
+- cd - change directory
+- rmdir - remove directory
 
 ### Types
 
@@ -161,11 +161,11 @@ Integers only use 32 bits. This can support 4 billion total values and lets you 
 
 When working with formatted strings, you can use the following format codes:
 
-%c - single character
-%f - floating point value
-%i - integer
-%li - long
-%s - string
+- %c - single character
+- %f - floating point value
+- %i - integer
+- %li - long
+- %s - string
 
 C supports a number of mathmatical operators: +, -, \*, /, %.
 
@@ -911,3 +911,56 @@ If you insert a new node without keeping track of the existing nodes, you have o
 You can stitch together data structures in memory using pointers as a thread.
 
 ### Trees
+
+A tree is a colection of entities called nodes. With tress, you can combine some of the lessons learned from linked lists but also gain some of the features of arrays.
+
+### Binary Search Tree
+
+The problem with binary search is that you have to use an array to have random access.
+
+You can stitch together values in memory with pointers, creating a tree with a root node at the top and children branching from it.
+
+You shouldn't put these numbers in a random location but instead use an algorithm. For any node, its left child will be less than its value and its right child will be greater than its value.
+
+A binary search tree is a recursive data structure.
+
+When searching, you always start at the root of the tree and see if a value is lower than or greater than the current node.
+
+```c
+typedef struct node
+{
+  int number;
+  struct node *left;
+  struct node *right;
+}
+node;
+
+bool search(node *tree, int number)
+{
+  if (tree == NULL)
+  {
+    return false;
+  }
+  else if (number < tree->number)
+  {
+    return search(tree->left, number);
+  }
+  else if (number > tree->number)
+  {
+    return search(tree->right, number);
+  }
+  else
+  {
+    return true;
+  }
+}
+```
+
+The downside of a tree is that you are using twice as many pointers and insertion becomes more complex.
+
+The running time of inserting into a binary search tree is O(log n).
+
+If n is the number of total nodes, the height of a binary search tree is going to be log n.
+
+If you notice that a tree is becoming essentially a strung out linked list, you can rebalance it by changing what the root element is.
+
