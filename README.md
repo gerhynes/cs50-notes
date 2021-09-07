@@ -1,5 +1,7 @@
 # CS50 Notes
 
+Notes from the CS50 2020 lectures.
+
 ## 0 - Scratch
 
 Computer science is not so much about programming as it is about problem solving.
@@ -964,3 +966,48 @@ If n is the number of total nodes, the height of a binary search tree is going t
 
 If you notice that a tree is becoming essentially a strung out linked list, you can rebalance it by changing what the root element is.
 
+### Hash Tables
+
+A hash table is essentially an array of linked lists.
+
+It's based on the idea of a hash function. A hash function lets you map data of arbitrary size to fixed-size values, for example taking in a string representing a name and assigning it a number between 0 and 25 for the letter of the alphabet the name starts with.
+
+If you've ever sorted a deck of cards by suit and number, you've hashed values.
+
+The running time for searching a hash table is O(n).
+
+### Tries
+
+A trie is a data structure used to store strings and more complex data and can be visualized as a graph.
+
+It is essentially a tree, each of whose nodes is an array, and each of those arrays is an array of pointers to other nodes.
+
+No matter how many strings you put into a trie, the number of steps is the length of the string. It is not dependent on n, the number of other strings in the datra structure.
+
+The running time for searching a trie is O(1).
+
+The downside of tries is that they take up a lot of memory.
+
+### Abstract Data Structures
+
+You can use the data structures you know as lower-level implementation details to solve higher-level problems.
+
+An abstract data structure is a model that is implemented using some other data structure.
+
+#### Queues
+
+A queue is a common abstract data structure with a first-in first-out (FIFO) property.
+
+A queue has two operations associated with it: enqueue (getting in line) and dequeue (getting out of line).
+
+You could implement a queue using an array or linked list.
+
+#### Stacks
+
+A stack is an abstract data structure with a last-in first-out (LIFO) property.
+
+A stack's two main operations are push (add) and pop (remove).
+
+#### Dictionaries
+
+A dictionary is an abstract data type that lets you associate keys with values.
