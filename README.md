@@ -1011,3 +1011,37 @@ A stack's two main operations are push (add) and pop (remove).
 #### Dictionaries
 
 A dictionary is an abstract data type that lets you associate keys with values.
+
+## 6 - Python
+
+Python tends to be more accessible than lower-level languages like C.
+
+The syntax is more straightforward and you don't need to specify types.
+
+Python relies on indentation rather than braces.
+
+In Python programming, something is considered "Pythonic" if it uses the idioms of Python well, rather than trying to transcribe ways of doing things from other languages.
+
+While C is a stringly-typed language (types exist and you must use them explicitly), Python is a loosely-typed languages (types exist but you can often infer them implicitly).
+
+Python has useful data types that don't exist in C:
+
+- range - a range of values
+- list - similar to an array but not fixed in size
+- tuple - like lists but immutable
+- dict - a store of key-value pairs
+- set - a collection of values without duplicates
+
+In Python, inside structures you can have not only variables but also functions.
+
+```python
+from PIL import Image, ImageFilter
+
+before = Image.open("bridge.bmp")
+after = before.filter(ImageFilter.BoxBlur(10))
+after.save("out.bmp")
+```
+
+Because strings are their own data type in Python, they have functions attached to them, such as `rstrip()` to remove whitespace from the end of the line.
+
+C is faster than Python because it is compiled in advance while Python is interpreted on the fly.
